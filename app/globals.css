@@ -1,0 +1,128 @@
+@import "tailwindcss";
+
+/* ==========================================================================
+   Speedmax — Corporate Maritime design tokens
+   Deep navy hull + steel blue, structured grid, conservative type.
+   Marketing pages use generous rhythm; the portal uses the same tokens at
+   higher density. One system, two densities.
+   ========================================================================== */
+
+@theme {
+  /* Hull navy — chrome, headers, footers, primary surfaces */
+  --color-navy-950: #050E1B;
+  --color-navy-900: #0A1A2F;
+  --color-navy-800: #0F2740;
+  --color-navy-700: #14304F;
+  --color-navy-600: #1B3E63;
+
+  /* Steel blue — interactive, accents, links */
+  --color-steel-600: #2E5A80;
+  --color-steel-500: #3E6D96;
+  --color-steel-400: #5C8AB0;
+  --color-steel-300: #8FB2CC;
+  --color-steel-200: #BDD3E3;
+  --color-steel-100: #DCE8F1;
+
+  /* Ice — page grounds, table zebra, quiet fills */
+  --color-ice-100: #E7EEF4;
+  --color-ice-50:  #F4F7FA;
+
+  /* Neutrals — text and rules */
+  --color-slate-900: #1A2230;
+  --color-slate-700: #3D4859;
+  --color-slate-500: #66738A;
+  --color-slate-400: #8792A5;
+  --color-slate-300: #C3CBD8;
+  --color-slate-200: #DFE4EC;
+  --color-slate-150: #E7EBF1;
+  --color-slate-100: #EFF2F6;
+
+  /* Beacon — reserved for CTA and genuine emphasis only. Used sparingly. */
+  --color-beacon-600: #B4471F;
+  --color-beacon-500: #C8552B;
+  --color-beacon-100: #FBEAE3;
+
+  /* ---- Status tones -------------------------------------------------------
+     Six semantic tones. Every one of the ~50 statuses across the nine §21
+     lifecycles maps to exactly one of these via lib/domain/status.ts.
+     Never hand-pick a colour at the call site. */
+  --color-tone-neutral-fg: #3D4859;
+  --color-tone-neutral-bg: #EFF2F6;
+  --color-tone-neutral-br: #C3CBD8;
+
+  --color-tone-info-fg: #1B4E7A;
+  --color-tone-info-bg: #E3EEF8;
+  --color-tone-info-br: #A9CBE6;
+
+  --color-tone-progress-fg: #6B4A10;
+  --color-tone-progress-bg: #FBF0DA;
+  --color-tone-progress-br: #E8CE92;
+
+  --color-tone-success-fg: #1B5E43;
+  --color-tone-success-bg: #E2F3EB;
+  --color-tone-success-br: #A2D5BE;
+
+  --color-tone-warning-fg: #8A4A16;
+  --color-tone-warning-bg: #FCEDE0;
+  --color-tone-warning-br: #EFC49A;
+
+  --color-tone-danger-fg: #8C2320;
+  --color-tone-danger-bg: #FBE7E6;
+  --color-tone-danger-br: #EEACA9;
+
+  /* Type — set by next/font in layout.tsx */
+  --font-sans: var(--font-plex-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, "Cascadia Mono", monospace;
+
+  /* Structured grid rhythm */
+  --spacing-gutter: 1.5rem;
+  --spacing-section: 5.5rem;
+}
+
+:root {
+  --surface: var(--color-ice-50);
+  --surface-raised: #FFFFFF;
+  --text: var(--color-slate-900);
+  --text-muted: var(--color-slate-500);
+  --rule: var(--color-slate-200);
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--surface);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-feature-settings: "cv05" 1;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Identifiers — booking, container, seal, AWB/BL, invoice numbers.
+   Mono with tabular figures so columns of references align. */
+.ref {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+
+/* Money and quantity columns must align on the decimal. */
+.tnum {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Visible, high-contrast focus — NFR-06 accessibility. */
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: 2px solid var(--color-steel-500);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
