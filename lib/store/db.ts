@@ -1,6 +1,7 @@
 import "server-only";
 
 import { promises as fs } from "node:fs";
+import os from "node:os";
 import path from "node:path";
 import { randomUUID } from "node:crypto";
 
@@ -26,7 +27,22 @@ import { buildSeed } from "./seed";
  *    from another worker. The file is small; re-reading it is cheap and correct.
  */
 
-const DATA_DIR = path.join(process.cwd(), ".data");
+/**
+ * Where the store lives.
+ *
+ * Locally this is `.data/` beside the source, which is what makes writes
+ * survive a dev-server restart.
+ *
+ * On Vercel it cannot be. The runtime filesystem is read-only apart from the
+ * system temp directory, so creating `.data/` there throws EROFS on the first
+ * request that touches the store — which is every portal, agent and finance
+ * page. Temp storage is per-instance and disappears when one recycles, so the
+ * demo re-seeds itself rather than crashing. That is the right trade for
+ * substitute data; real persistence is what connecting Supabase is for.
+ */
+const DATA_DIR = process.env.VERCEL
+  ? path.join(os.tmpdir(), "speedmax")
+  : path.join(process.cwd(), ".data");
 const DATA_FILE = path.join(DATA_DIR, "speedmax.json");
 export const UPLOAD_DIR = path.join(DATA_DIR, "uploads");
 
